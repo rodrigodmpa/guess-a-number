@@ -52,7 +52,7 @@ const StartGameScreen = ({onStartGame}) => {
     <View style={styles.screen}>
       <Text style={styles.screenTitle}>Start a new game</Text>
       <Card style={styles.inputContainer}>
-        <Text style={styles.screenTitle}>Select a number</Text>
+        <Text style={styles.screenSubtitle}>Select a number</Text>
         <Input 
           style={styles.input} 
           placeholder=""
@@ -107,7 +107,11 @@ const styles = StyleSheet.create({
   screenTitle: {
     marginVertical: 10,
     fontSize: 20,
+    fontFamily: 'open-sans-bold'
   },  
+  screenSubtitle:{
+    fontFamily: 'open-sans'
+  },
   btnContainer: {
     width: '100%',
     flexDirection: 'row',
