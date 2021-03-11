@@ -1,4 +1,4 @@
-Este app é um mini game que entre você e o computador, onde o computador tenta descobrir o número que você escolheu, feito em react native.
+Este app é um mini game entre você e o computador, onde o computador tenta descobrir o número que você escolheu, feito em react native.
 
 Para rodar, basta clonar o projeto, e no terminal `npm start` e aguardar.
 
