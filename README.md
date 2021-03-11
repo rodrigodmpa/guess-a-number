@@ -1,6 +1,6 @@
 Este app é um mini game entre você e o computador, onde o computador tenta descobrir o número que você escolheu, feito em react native.
 
-Para rodar, basta clonar o projeto, e no terminal `npm start` e aguardar.
+Para rodar, basta clonar o projeto, e no terminal rode `npm install` e depois `npm start` e aguardar.
 
 Após buildado, para rodar no emulador iOS (com o emulador do XCode ou um iphone), basta digitar `i` no mesmo terminal.
 
