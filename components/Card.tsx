@@ -3,7 +3,7 @@ import { Button, Text, TextInput, View, StyleSheet } from 'react-native';
 
 // import { Container } from './styles';
 
-const Card = ({title, children, style}) => {
+const Card = ({children, style}) => {
   return (
     <View style={{...styles.card, ...style}}>
       {children}

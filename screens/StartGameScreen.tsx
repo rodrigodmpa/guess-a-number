@@ -11,7 +11,7 @@ const StartGameScreen = ({onStartGame}) => {
 
   const [enteredValue, setEnteredValue] = useState('');
   const [confirmed, setConfirmed] = useState(false);
-  const [selectedNumber, setSelectedNumber] = useState();
+  const [selectedNumber, setSelectedNumber] = useState<number>();
 
   const numberInputHandler = (inputText) => {
     setEnteredValue(inputText.replace(/[^0-9]/g,''));
@@ -39,7 +39,7 @@ const StartGameScreen = ({onStartGame}) => {
     Keyboard.dismiss();
   }
 
-  let confirmedOutput;
+  let confirmedOutput:React.ReactNode;
   if (confirmed) {
     confirmedOutput = (
     <Card style={styles.summaryContainer}>
