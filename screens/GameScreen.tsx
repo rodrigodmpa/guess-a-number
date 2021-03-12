@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, Alert, ScrollView, Dimensions } from 'react-native';
 import Card from '../components/Card';
 import MainButton from '../components/MainButton';
 import NumberContainer from '../components/NumberContainer';
@@ -33,7 +33,25 @@ const GameScreen = ({userChoice, onGameOver}) => {
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   
   const [guesses, setGuesses] = useState([initialGuess]);
+  const [availableDeviceWidth, setAvailableDeviceWidth] = useState(
+    Dimensions.get('window').width
+  );
+  const [availableDeviceHeight, setAvailableDeviceHeight] = useState(
+    Dimensions.get('window').height
+  );
 
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setAvailableDeviceWidth(Dimensions.get('window').width);
+      setAvailableDeviceHeight(Dimensions.get('window').height);
+    }
+    Dimensions.addEventListener('change', updateLayout);
+
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    }
+  }, [])
 
   useEffect(() => {
     if(currentGuess === userChoice) {
@@ -65,11 +83,47 @@ const GameScreen = ({userChoice, onGameOver}) => {
     setGuesses([nextNumber, ...guesses])
   }
   
+  let listContainerStyle = styles.listContainer;
+  if (availableDeviceWidth < 350) {
+    listContainerStyle = styles.listContainerBig
+  }
+
+  let btnContainerStyle = styles.btnContainerSmall;
+  if (availableDeviceWidth < 600) {
+    btnContainerStyle = styles.btnContainerBig
+  }
+  
+  if(availableDeviceHeight < 500) {
+    return (
+      <View style={styles.screen}>
+        <Text style={DefaultStyles.title} >Opponent's guess:</Text>
+        
+        <View style={styles.controls}>
+          <MainButton onPress={() => nextGuessHandler('lower')}>
+            Lower <Ionicons name="md-remove" size={24} color='white'/>
+          </MainButton>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <MainButton onPress={() => nextGuessHandler('greater')}>
+            Greater <Ionicons name="md-add" size={24} color='white'/>
+          </MainButton>
+        </View>
+          
+        
+        <View style={styles.listContainer}>
+          <ScrollView contentContainerStyle={styles.list} >
+            {guesses.map((guess, idx) => renderListItem(guess, guesses.length - idx))}
+          </ScrollView>
+        </View>
+      </View>
+    );
+  }
+
+  
   return (
     <View style={styles.screen}>
       <Text style={DefaultStyles.title} >Opponent's guess:</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <Card style={styles.btnContainer}>
+      <Card style={btnContainerStyle}>
         <MainButton onPress={() => nextGuessHandler('lower')}>
           Lower <Ionicons name="md-remove" size={24} color='white'/>
         </MainButton>
@@ -77,7 +131,7 @@ const GameScreen = ({userChoice, onGameOver}) => {
           Greater <Ionicons name="md-add" size={24} color='white'/>
         </MainButton>
       </Card>
-      <View style={styles.listContainer}>
+      <View style={listContainerStyle}>
         <ScrollView contentContainerStyle={styles.list} >
           {guesses.map((guess, idx) => renderListItem(guess, guesses.length - idx))}
         </ScrollView>
@@ -94,10 +148,17 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
   },
-  btnContainer: {
+  btnContainerBig: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 20,
+    width: 400,
+    maxWidth: '90%'
+  },
+  btnContainerSmall: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
     width: 400,
     maxWidth: '90%'
   },
@@ -112,12 +173,23 @@ const styles = StyleSheet.create({
     width: '60%',
     borderRadius: 10
   },
+  listContainerBig: {
+    flex: 1,
+    width: '80%'
+  },
   listContainer: {
     flex: 1,
+    width: '60%'
   },
   list: {
     flexGrow: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-start'
+  },
+  controls: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '80%',
+    alignItems: 'center'
   }
 });

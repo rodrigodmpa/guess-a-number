@@ -25,11 +25,11 @@ export default function App() {
 
   if (!dataLoaded) {
     return (
-      <AppLoading 
-        startAsync={fetchFonts} 
-        onFinish={() => setDataLoaded(true)}
-        onError={(err) => console.log(err)}
-      />
+        <AppLoading
+          startAsync={fetchFonts}
+          onFinish={() => setDataLoaded(true)}
+          onError={(err) => console.log(err)}
+        />
     )
   }
 
@@ -55,10 +55,10 @@ export default function App() {
     content = <GameOverScreen rounds={guessRounds} correctNumber={userNumber} onPlayAgain={configureNewGameHandler}/>
   }
   return (
-    <View style={styles.screen}>
-      <Header title="Guess a number"/>
-      {content}
-    </View>
+      <View >
+        <Header title="Guess a number"/>
+        {content}
+      </View>
   );
 }
 
